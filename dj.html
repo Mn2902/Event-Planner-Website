@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dj Night</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Dj Night</h1>
+    </div>
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="dj night img/img (1).jpg" alt="">
+        </div>
+    </div>
+    <div class="header">
+        <h1>videos</h1>
+    </div>
+
+    <div class="galleryvid">
+    
+        <div class="galleryvid-item">
+            <video src="dj night vid/vid (1).mp4" controls></video>
+        </div>
+    </div>
+    <script src="script.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightgray;
+        }
+
+        .header h1 {
+            background-color: lightpink;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            background-color: lightgray;
+        }
+        .galleryvid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            background-color: lightgray;
+        }
+
+        .gallery-item {
+            flex: 1 1 calc(25% - 20px); /* 4 items per row */
+            margin: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .galleryvid-item{
+            flex: 1 1 calc(25% - 20px); /* 4 items per row */
+            margin: 10px;
+            overflow: hidden;
+            position: relative;
+
+        }
+
+        .gallery-item img, .galleryvid-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover img, .galleryvid-item:hover video {
+            transform: scale(1.1);
+        }
+        img{
+            height: 100%;
+            width: 100%;
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            margin: auto;
+            overflow: auto;
+        }
+
+        .lightbox-content img, .lightbox-content video {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .gallery-item {
+                flex: 1 1 calc(33.33% - 20px); /* 3 items per row */
+            }
+            .galleryvid-item {
+                flex: 1 1 calc(33.33% - 20px); /* 3 items per row */
+            }
+
+        }
+
+        @media (max-width: 768px) {
+            .gallery-item {
+                flex: 1 1 calc(50% - 20px); /* 2 items per row */
+            }
+            .galleryvid-item {
+                flex: 1 1 calc(50% - 20px); /* 2 items per row */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-item {
+                flex: 1 1 calc(100% - 20px); /* 1 item per row */
+            }
+            .galleryvid-item {
+                flex: 1 1 calc(100% - 20px); /* 1 item per row */
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const galleryItems = document.querySelectorAll('.gallery-item img, .galleryvid-item video');
+
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    openLightbox(this.tagName.toLowerCase() === 'video' ? this.currentSrc : this.src, this.tagName.toLowerCase());
+                });
+            });
+            const gallery = document.querySelector('.galleryvid');
+        for (let i = 2; i <= 18; i++) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'galleryvid-item';
+            const video = document.createElement('video');
+            video.src = `dj night vid/vid (${i}).mp4`;
+            video.controls = true;
+            galleryItem.appendChild(video);
+            gallery.appendChild(galleryItem);
+        }
+
+            function openLightbox(src, type) {
+                const lightbox = document.createElement('div');
+                lightbox.classList.add('lightbox');
+                if (type === 'video') {
+                    lightbox.innerHTML = `
+                        <div class="lightbox-content">
+                            <span class="close">&times;</span>
+                            <video src="${src}" controls autoplay></video>
+                        </div>
+                    `;
+                } else {
+                    lightbox.innerHTML = `
+                        <div class="lightbox-content">
+                            <span class="close">&times;</span>
+                            <img src="${src}" alt="Enlarged Image">
+                        </div>
+                    `;
+                }
+                document.body.appendChild(lightbox);
+
+                const closeBtn = lightbox.querySelector('.close');
+                closeBtn.addEventListener('click', function() {
+                    document.body.removeChild(lightbox);
+                });
+            }
+        });
+
+    </script>
+
+</body>
+</html>
