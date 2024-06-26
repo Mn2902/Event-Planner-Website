@@ -1,1 +1,1 @@
-![Website Preview](preview.png)
+![Website Preview](Preview.png)
